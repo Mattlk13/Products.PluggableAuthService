@@ -1508,6 +1508,8 @@ def addPluggableAuthService( dispatcher
     """ Add a PluggableAuthService to 'dispatcher'.
 
     o BBB for non-GenericSetup use.
+    o Still used in Extensions/upgrade.py _replaceUserFolder,
+      which is at least used by Plone for replacing the root acl_users.
     """
     pas = PluggableAuthService()
     preg = PluginRegistry( _PLUGIN_TYPE_INFO )

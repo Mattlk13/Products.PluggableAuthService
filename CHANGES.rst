@@ -4,8 +4,11 @@ Change Log
 1.12.0 (unreleased)
 -------------------
 
-- Do not fail when our base profiles are already registered.
-  This may happen in tests if our ``initialize`` code is called twice.
+- Register our base profiles in zcml.  This means the ``simple`` profile no longer has the id
+  ``PluggableAuthService:simple`` but ``Products.PluggableAuthService:simple``.
+  Similarly for the ``empty`` profile.
+  Removed all code that tried to handle the case where ``GenericSetup`` was not available.
+  This has been a dependency since 2008.
 
 
 1.11.0 (2016-03-01)

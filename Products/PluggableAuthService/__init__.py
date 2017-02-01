@@ -64,8 +64,6 @@ registerMultiPlugin(CPC.ChallengeProtocolChooser.meta_type)
 registerMultiPlugin(RTS.RequestTypeSniffer.meta_type)
 registerMultiPlugin(NCH.NotCompetent_byRoles.meta_type)
 
-from Products.GenericSetup import profile_registry
-from Products.GenericSetup import BASE
 from Products.GenericSetup.tool import SetupTool
 registerMultiPlugin(SetupTool.meta_type)
 
@@ -272,30 +270,3 @@ def initialize(context):
                            )
                          , icon='www/PluggableAuthService.png'
                          )
-    try:
-        profile_registry.getProfileInfo('PluggableAuthService:simple')
-    except KeyError:
-        # not yet registered
-        profile_registry.registerProfile(
-            'simple',
-            'Simple PAS Content Profile',
-            'Content for a simple PAS.',
-            'profiles/simple',
-            'PluggableAuthService',
-            BASE,
-            IPluggableAuthService,
-        )
-    try:
-        profile_registry.getProfileInfo('PluggableAuthService:empty')
-    except KeyError:
-        # not yet registered
-        profile_registry.registerProfile(
-            'empty',
-            'Empty PAS Content Profile',
-            'Content for an empty PAS '
-            '(plugins registry only).',
-            'profiles/empty',
-            'PluggableAuthService',
-            BASE,
-            IPluggableAuthService,
-            )

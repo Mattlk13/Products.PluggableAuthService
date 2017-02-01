@@ -1,5 +1,6 @@
 <configure
     xmlns="http://namespaces.zope.org/zope"
+    xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
     xmlns:browser="http://namespaces.zope.org/browser">
 
   <browser:page
@@ -8,6 +9,24 @@
       class=".utils.CSRFToken"
       permission="zope.Public"
       />
+
+   <genericsetup:registerProfile
+        name="simple"
+        directory="profiles/simple"
+        title="Simple PAS Content Profile"
+        description="Content for a simple PAS."
+        for="Products.PluggableAuthService.interfaces.authservice.IPluggableAuthService"
+        provides="Products.GenericSetup.interfaces.BASE"
+        />
+
+   <genericsetup:registerProfile
+        name="empty"
+        directory="profiles/empty"
+        title="Empty PAS Content Profile"
+        description="Content for a empty PAS (plugins registry only)."
+        for="Products.PluggableAuthService.interfaces.authservice.IPluggableAuthService"
+        provides="Products.GenericSetup.interfaces.BASE"
+        />
 
   <include file="exportimport.zcml" />
 

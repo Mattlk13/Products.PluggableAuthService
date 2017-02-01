@@ -64,14 +64,10 @@ registerMultiPlugin(CPC.ChallengeProtocolChooser.meta_type)
 registerMultiPlugin(RTS.RequestTypeSniffer.meta_type)
 registerMultiPlugin(NCH.NotCompetent_byRoles.meta_type)
 
-try:
-    from Products.GenericSetup import profile_registry
-    from Products.GenericSetup import BASE
-    from Products.GenericSetup.tool import SetupTool
-except ImportError:
-    profile_registry = None
-else:
-    registerMultiPlugin(SetupTool.meta_type)
+from Products.GenericSetup import profile_registry
+from Products.GenericSetup import BASE
+from Products.GenericSetup.tool import SetupTool
+registerMultiPlugin(SetupTool.meta_type)
 
 # monkey patch Zope to cause zmi logout to be PAS-aware
 from App.Management import Navigation
@@ -267,41 +263,39 @@ def initialize(context):
                          , visibility=None
                          )
 
-    if profile_registry is not None:
-
-        context.registerClass( PluggableAuthService.PluggableAuthService
-                             , meta_type='Configured PAS'
-                             , permission=ManageUsers
-                             , constructors=(
-                                PluggableAuthService.addConfiguredPASForm,
-                                PluggableAuthService.addConfiguredPAS,
-                               )
-                             , icon='www/PluggableAuthService.png'
-                             )
-        try:
-            profile_registry.getProfileInfo('PluggableAuthService:simple')
-        except KeyError:
-            # not yet registered
-            profile_registry.registerProfile(
-                'simple',
-                'Simple PAS Content Profile',
-                'Content for a simple PAS.',
-                'profiles/simple',
-                'PluggableAuthService',
-                BASE,
-                IPluggableAuthService,
+    context.registerClass( PluggableAuthService.PluggableAuthService
+                         , meta_type='Configured PAS'
+                         , permission=ManageUsers
+                         , constructors=(
+                            PluggableAuthService.addConfiguredPASForm,
+                            PluggableAuthService.addConfiguredPAS,
+                           )
+                         , icon='www/PluggableAuthService.png'
+                         )
+    try:
+        profile_registry.getProfileInfo('PluggableAuthService:simple')
+    except KeyError:
+        # not yet registered
+        profile_registry.registerProfile(
+            'simple',
+            'Simple PAS Content Profile',
+            'Content for a simple PAS.',
+            'profiles/simple',
+            'PluggableAuthService',
+            BASE,
+            IPluggableAuthService,
+        )
+    try:
+        profile_registry.getProfileInfo('PluggableAuthService:empty')
+    except KeyError:
+        # not yet registered
+        profile_registry.registerProfile(
+            'empty',
+            'Empty PAS Content Profile',
+            'Content for an empty PAS '
+            '(plugins registry only).',
+            'profiles/empty',
+            'PluggableAuthService',
+            BASE,
+            IPluggableAuthService,
             )
-        try:
-            profile_registry.getProfileInfo('PluggableAuthService:empty')
-        except KeyError:
-            # not yet registered
-            profile_registry.registerProfile(
-                'empty',
-                'Empty PAS Content Profile',
-                'Content for an empty PAS '
-                '(plugins registry only).',
-                'profiles/empty',
-                'PluggableAuthService',
-                BASE,
-                IPluggableAuthService,
-                )

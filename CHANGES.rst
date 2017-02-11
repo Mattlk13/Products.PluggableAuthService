@@ -10,6 +10,8 @@ Change Log
   Removed all code that tried to handle the case where ``GenericSetup`` was not available.
   This has been a dependency since 2008.
 
+- Fix compatibility with Zope 4 WSGIResponse.
+
 
 1.11.0 (2016-03-01)
 -------------------

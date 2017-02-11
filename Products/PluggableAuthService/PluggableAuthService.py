@@ -1061,7 +1061,8 @@ class PluggableAuthService( Folder, Cacheable ):
         resp = req['RESPONSE']
         req._hold(ResponseCleanup(resp))
         stack = getattr(resp, '_unauthorized_stack', [])
-        stack.append(resp._unauthorized)
+        if hasattr(resp, '_unauthorized'):
+            stack.append(resp._unauthorized)
         resp._unauthorized_stack = stack
         resp._unauthorized = self._unauthorized
         resp._has_challenged = False
